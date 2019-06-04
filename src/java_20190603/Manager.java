@@ -8,5 +8,6 @@ public class Manager extends Alba{
 	public  void actionManager(){
 		System.out.println("Manager actionManager()");
 		
+		
 	}
 }
