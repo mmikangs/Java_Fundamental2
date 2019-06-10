@@ -61,6 +61,7 @@ public class ConsoleApplication {
 		for (Member m1 : list){
 			
 			//(1) 젤 간단하고 이렇게 하는 것이 젤 좋아
+			//*****toString overriding 했구나!!!! (어려우니까!!! 이게 더 편한 방법!)
 			System.out.println(m1);
 			
 			// (3 - 너무 기본기에 충실한 느낌.) System.out.println("아이디 : "+m1.getId()+", 이름: "+m1.getName());
