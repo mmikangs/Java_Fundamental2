@@ -1,4 +1,4 @@
-package java_20190610_re;
+/*package java_20190610_re;
 
 import java.util.ArrayList;
 
@@ -22,3 +22,4 @@ public class Alba extends Parent {
 	}
 
 }
+*/
