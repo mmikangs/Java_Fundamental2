@@ -38,6 +38,7 @@ public class SwitchDemo {
 			break;
 
 		}
+
 		System.out.println(month + "월은 " + season + "입니다.");
 
 	}
