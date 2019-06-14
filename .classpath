@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="C:/Users/acorn/Desktop/poi-4.1.0/poi-ooxml-schemas-4.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/acorn/Desktop/poi-4.1.0/poi-scratchpad-4.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/acorn/Desktop/util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acorn/Downloads/core-3.3.4-20180529.153305-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acorn/Downloads/javase-3.3.4-20180529.153314-1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

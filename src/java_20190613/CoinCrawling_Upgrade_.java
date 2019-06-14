@@ -2,6 +2,9 @@ package java_20190613;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -12,17 +15,32 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class CoinCrawling {
+public class CoinCrawling_Upgrade_ {
 
-	public static void main(String[] args) {
+
+private String getKoreanDate(String date){
+	String koreanDate = null;
+	SimpleDateFormat from = new SimpleDateFormat("MMM dd, yyyy",Locale.US);
+	SimpleDateFormat to = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREAN);
+	try {
+		Date d = from.parse(date);
+		koreanDate = to.format(d);
+		}catch (Exception e) {
+			e.printStackTrace();
+		// TODO: handle exception
+	}
+	return koreanDate;
+}
+	
+	public void execute(String sheetName, String coinName, String startDate, String endDate){
 
 		HSSFWorkbook workbook = new HSSFWorkbook(); // 새 엑셀 생성
-		HSSFSheet sheet = workbook.createSheet("비트코인"); // 새 시트(Sheet) 생성
+		HSSFSheet sheet = workbook.createSheet(sheetName); // 새 시트(Sheet) 생성
 
-		// HSSFRow row = null;
-		// HSSFCell cell = null;
+		 HSSFRow row = null;
+		 HSSFCell cell = null;
 
-		String ur1 = "https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20180613&end=20190613";
+		String ur1 = "https://coinmarketcap.com/currencies/"+coinName+"/historical-data/?start="+startDate+"&end="+endDate+"";
 
 		// 전체 HTML문서를 관리하기 위한 객체 (CTRL+SHIFT+O)
 		Document doc = null;
@@ -43,8 +61,8 @@ public class CoinCrawling {
 
 		int rowIndex = 0;
 
-		HSSFRow row = null;
-		HSSFCell cell = null;
+		//HSSFRow row = null;
+		//HSSFCell cell = null;
 
 		for (int i = 0; i < headElements.size(); i++) {
 			row = sheet.createRow(rowIndex++);
@@ -97,34 +115,35 @@ public class CoinCrawling {
 			String open = e.child(1).text();
 
 			cell = row.createCell(1);
-			cell.setCellValue(date);
+			cell.setCellValue(Double.parseDouble(open));
 
 			String high = e.child(2).text();
 			cell = row.createCell(2);
-			cell.setCellValue(high);
+			cell.setCellValue(Double.parseDouble(high));
 
 			String low = e.child(3).text();
 			cell = row.createCell(3);
-			cell.setCellValue(low);
+			cell.setCellValue(Double.parseDouble(low));
 
 			String close = e.child(4).text();
 
 			cell = row.createCell(4);
-			cell.setCellValue(close);
+			cell.setCellValue(Double.parseDouble(close));
 
 			String volume = e.child(5).text();
-
-			cell = row.createCell(5);
-			cell.setCellValue(volume);
+			volume = volume.replaceAll(",","");
+			cell = row.createCell(5); //행의 셀은 0번부터 시작 
+			cell.setCellValue(Long.parseLong(volume)); //생성한 셀에 데이터 삽입 
 
 			String marketCap = e.child(6).text();
+			marketCap = marketCap.replaceAll(",","");
 			cell = row.createCell(6);
-			cell.setCellValue(marketCap);
+			cell.setCellValue(Long.parseLong(marketCap));
 			System.out.printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", date, open, high, low, close, volume, marketCap);
 		}
 
 		try {
-			FileOutputStream fileoutputstream = new FileOutputStream("C:\\down\\swi11m.xls");
+			FileOutputStream fileoutputstream = new FileOutputStream("C:\\down\\"+coinName+".xls");
 			workbook.write(fileoutputstream);
 			fileoutputstream.close();
 			System.out.println("엑셀파일생성성공");
@@ -134,4 +153,17 @@ public class CoinCrawling {
 		}
 
 	}
-}
+	
+
+	   public static void main(String[] args) {
+	      
+	      CoinCrawling_Upgrade_ c = new CoinCrawling_Upgrade_();
+	      c.execute("비트코인","bitcoin","20180613","20190614"); // =>bitcoin
+	      c.execute("이더리움","ethereum","20180613","20190614"); // =>ethereum
+	      c.execute("리플","ripple","20180613","20190614"); // =>xrp
+	      
+
+	   }
+	   
+	}
+
